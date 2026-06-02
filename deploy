@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+echo "Running deployment script..."
+read -p "Is everything (that should be) committed and pushed? (y/n): " confirmation
+if [ "$confirmation" != "y" ]; then
+    echo "Please commit and push all changes first."
+    exit 1
+fi
+
+# Fetch GitHub token from local CLI
+GITHUB_TOKEN=$(gh auth token 2>/dev/null)
+if [ -z "$GITHUB_TOKEN" ]; then
+    echo "Error: Could not retrieve GitHub token via 'gh auth token'."
+    exit 1
+fi
+
+# Fetch origin URL
+ORIGIN_URL=$(git remote get-url origin 2>/dev/null)
+if [ -z "$ORIGIN_URL" ]; then
+    echo "Error: Could not retrieve origin URL of the local repository."
+    exit 1
+fi
+
+# Parse repo path and construct authenticated clone URL
+if [[ "$ORIGIN_URL" =~ github\.com[:/](.+)$ ]]; then
+    REPO_PATH="${BASH_REMATCH[1]}"
+    REPO_PATH="${REPO_PATH%.git}"
+    CLONE_URL="https://${GITHUB_TOKEN}@github.com/${REPO_PATH}.git"
+else
+    echo "Error: Origin URL is not a GitHub URL or cannot be parsed: $ORIGIN_URL"
+    exit 1
+fi
+
+export $(grep -v '^#' ./deploy.env | xargs)
+
+# Construct remote exports from deploy.env to apply it without transferring the file
+ENV_EXPORTS=""
+while IFS= read -r line || [ -n "$line" ]; do
+    [[ -z "$line" || "$line" =~ ^# ]] && continue
+    ENV_EXPORTS="$ENV_EXPORTS export $line;"
+done < ./deploy.env
+
+ssh ${DOCKER_USER}@${DOCKER_ADDR} "${ENV_EXPORTS} rm -rf ${DOCKER_APP_ROOT} && git clone ${CLONE_URL} ${DOCKER_APP_ROOT} && cd ${DOCKER_APP_ROOT} && ./deployment/bootstrap"

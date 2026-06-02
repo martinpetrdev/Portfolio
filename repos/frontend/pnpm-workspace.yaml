@@ -1,0 +1,4 @@
+allowBuilds:
+  sharp: true
+minimumReleaseAgeExclude:
+  - '@types/react@19.2.16'
