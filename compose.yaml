@@ -5,7 +5,7 @@ services:
       dockerfile: ./Dockerfile
       context: ./repos/frontend
     networks:
-      traefik:
+      traefik_proxy:
       portfolio:
     labels:
       - "traefik.enable=true"
@@ -15,6 +15,6 @@ services:
       - "traefik.http.services.${APP_ID}.loadbalancer.server.port=3000"
 
 networks:
-  traefik:
+  traefik_proxy:
     external: true
   portfolio:
