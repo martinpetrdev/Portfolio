@@ -15,7 +15,7 @@ const canvas = Buffer.alloc(width * height * 4, 0);
 
 for (let y = 0; y < info.height; y++) {
   for (let x = 0; x < info.width; x++) {
-    const brightness = data[y * info.width + x];
+    const brightness = data[y * info.width + x]!;
 
     const radius = Math.round(dotSize / 5);
 
