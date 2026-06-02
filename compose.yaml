@@ -13,7 +13,6 @@ services:
       - "traefik.docker.network=traefik_proxy"
       - "traefik.routers.${APP_ID}.rule=Host(`${APP_DOMAIN}`) || Host(`www.${APP_DOMAIN}`)"
       - "traefik.routers.${APP_ID}.entrypoints=https"
-      - "traefik.routers.${APP_ID}.tls=true"
       - "traefik.http.services.${APP_ID}.loadbalancer.server.port=3000"
 
 networks:
