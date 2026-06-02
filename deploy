@@ -31,13 +31,47 @@ else
     exit 1
 fi
 
+# Get current branch
+BRANCH_NAME=$(git branch --show-current 2>/dev/null)
+BRANCH_NAME=${BRANCH_NAME:-main}
+
+# Load environment variables locally
 export $(grep -v '^#' ./deploy.env | xargs)
+
+# Get the parent directory of DOCKER_APP_ROOT
+DOCKER_APP_PARENT=$(dirname "${DOCKER_APP_ROOT}")
 
 # Construct remote exports from deploy.env to apply it without transferring the file
 ENV_EXPORTS=""
 while IFS= read -r line || [ -n "$line" ]; do
     [[ -z "$line" || "$line" =~ ^# ]] && continue
-    ENV_EXPORTS="$ENV_EXPORTS export $line;"
+    ENV_EXPORTS="${ENV_EXPORTS}export ${line}; "
 done < ./deploy.env
 
-ssh ${DOCKER_USER}@${DOCKER_ADDR} "${ENV_EXPORTS} rm -rf ${DOCKER_APP_ROOT} && git clone ${CLONE_URL} ${DOCKER_APP_ROOT} && cd ${DOCKER_APP_ROOT} && ./deployment/bootstrap"
+# Execute the deployment commands on the remote server
+ssh ${DOCKER_USER}@${DOCKER_ADDR} "/usr/bin/env bash -s" <<EOF
+# Set remote environment variables
+${ENV_EXPORTS}
+
+# Create app parent directory if it doesn't exist
+mkdir -p "${DOCKER_APP_PARENT}"
+
+# Clone or update the repository
+if [ ! -d "${DOCKER_APP_ROOT}/.git" ]; then
+    echo "Performing clean clone of branch '${BRANCH_NAME}'..."
+    rm -rf "${DOCKER_APP_ROOT}"
+    git clone -b "${BRANCH_NAME}" "${CLONE_URL}" "${DOCKER_APP_ROOT}"
+else
+    echo "Updating existing clone of branch '${BRANCH_NAME}'..."
+    cd "${DOCKER_APP_ROOT}"
+    git remote set-url origin "${CLONE_URL}"
+    git fetch origin
+    git checkout -B "${BRANCH_NAME}" "origin/${BRANCH_NAME}"
+    git reset --hard "origin/${BRANCH_NAME}"
+    git clean -fd
+fi
+
+# Run the bootstrap script
+cd "${DOCKER_APP_ROOT}"
+./deployment/bootstrap
+EOF
