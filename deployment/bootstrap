@@ -2,5 +2,3 @@
 
 docker compose -f ./compose.yaml build
 docker compose -f ./compose.yaml up -d --remove-orphans
-
-docker image prune -f
