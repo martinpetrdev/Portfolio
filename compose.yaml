@@ -11,8 +11,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik_proxy"
-      - "traefik.routers.${APP_ID}.rule=Host(`${APP_DOMAIN}`) || Host(`www.${APP_DOMAIN}`)"
-      - "traefik.routers.${APP_ID}.entrypoints=https"
+      - "traefik.http.routers.${APP_ID}.rule=Host(`${APP_DOMAIN}`) || Host(`www.${APP_DOMAIN}`)"
+      - "traefik.http.routers.${APP_ID}.entrypoints=https"
       - "traefik.http.services.${APP_ID}.loadbalancer.server.port=3000"
 
 networks:
