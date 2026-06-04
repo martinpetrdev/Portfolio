@@ -1,0 +1,18 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: portfolio-frontend-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`martinpetr.dev`) || Host(`www.martinpetr.dev`)
+      kind: Rule
+      services:
+        - name: portfolio-frontend-svc
+          port: 3000
+      middlewares:
+        - name: www-to-root-redirect
+
+  tls:
+    certResolver: cloudflare

@@ -1,0 +1,9 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: www-to-root-redirect
+spec:
+  redirectRegex:
+    regex: "^https://www.martinpetr.dev/(.*)"
+    replacement: "https://martinpetr.dev/${1}"
+    permanent: true
