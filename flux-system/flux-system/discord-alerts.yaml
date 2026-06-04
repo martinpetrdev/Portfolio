@@ -1,0 +1,22 @@
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Provider
+metadata:
+  name: discord-provider
+  namespace: flux-system
+spec:
+  type: discord
+  secretRef:
+    name: discord-webhook-url
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta3
+kind: Alert
+metadata:
+  name: portfolio-alert
+  namespace: flux-system
+spec:
+  providerRef:
+    name: discord-provider
+  eventSeverity: info
+  eventSources:
+    - kind: Kustomization
+      name: portfolio-frontend

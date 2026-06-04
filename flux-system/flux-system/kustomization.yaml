@@ -4,3 +4,4 @@ resources:
   - gotk-components.yaml
   - gotk-sync.yaml
   - app-sync.yaml
+  - discord-alerts.yaml
