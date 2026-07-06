@@ -31,6 +31,10 @@ export class SiteService {
           icon: 'mdi:github',
           href: 'https://github.com/MartinGamesCZ',
         },
+        {
+          icon: 'mdi:linkedin',
+          href: 'https://www.linkedin.com/in/martinpetrdev/',
+        },
       ],
     };
 

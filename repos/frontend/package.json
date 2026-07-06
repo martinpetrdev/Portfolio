@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
+    "@paper-design/shaders-react": "^0.0.77",
     "axios": "^1.16.1",
     "next": "16.2.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "react-github-calendar": "^5.0.6",
     "sharp": "^0.34.5"
   },
   "devDependencies": {
