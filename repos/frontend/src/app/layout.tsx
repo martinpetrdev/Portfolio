@@ -18,8 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${firaCode.variable} antialiased`}>
-      <body className="dark">{children}</body>
+    <html
+      lang="en"
+      className={`${firaCode.variable} dark antialiased`}
+      style={{ colorScheme: "dark" }}
+    >
+      <body className="dark mocha">{children}</body>
     </html>
   );
 }

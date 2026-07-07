@@ -16,7 +16,8 @@ export function GitGraph() {
         showTotalCount={false}
         className="w-screen translate-x-6"
         theme={{
-          dark: ["var(--color-ctp-mantle)", "var(--color-ctp-peach)"],
+          light: ["#181825", "#fab387"],
+          dark: ["#181825", "#fab387"],
         }}
         weekStart={1}
         year={2024}
@@ -29,7 +30,8 @@ export function GitGraph() {
         showTotalCount={false}
         className="w-screen translate-x-3"
         theme={{
-          dark: ["var(--color-ctp-mantle)", "var(--color-ctp-peach)"],
+          light: ["#181825", "#fab387"],
+          dark: ["#181825", "#fab387"],
         }}
         weekStart={1}
         year={2025}
@@ -42,7 +44,8 @@ export function GitGraph() {
         showTotalCount={false}
         className="w-screen"
         theme={{
-          dark: ["var(--color-ctp-mantle)", "var(--color-ctp-peach)"],
+          light: ["#181825", "#fab387"],
+          dark: ["#181825", "#fab387"],
         }}
         weekStart={1}
         year={2026}
