@@ -13,9 +13,9 @@ resources:
 - ingress-backend.yaml
 - ingress-backend-ssh.yaml
 images:
-- name: cr.cloud.martinpetr.dev/portfolio-frontend
-  newName: cr.cloud.martinpetr.dev/portfolio-frontend
-  newTag: e600b8f144c8a406518ebd7b4bb05d875ab6620e
 - name: cr.cloud.martinpetr.dev/portfolio-backend
   newName: cr.cloud.martinpetr.dev/portfolio-backend
-  newTag: latest
+  newTag: 6f89702543f429ccef77b76c485a808b5ee9c627
+- name: cr.cloud.martinpetr.dev/portfolio-frontend
+  newName: cr.cloud.martinpetr.dev/portfolio-frontend
+  newTag: 6f89702543f429ccef77b76c485a808b5ee9c627
