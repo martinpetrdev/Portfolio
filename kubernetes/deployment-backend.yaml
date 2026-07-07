@@ -38,4 +38,4 @@ spec:
         - name: ssh-keys
           secret:
             secretName: portfolio-ssh-keys
-            defaultMode: 0400
+            defaultMode: 0444
