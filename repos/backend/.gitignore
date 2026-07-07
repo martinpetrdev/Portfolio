@@ -1,2 +1,5 @@
 dist/
 node_modules/
+keys/host_key
+keys/host_key.pub
+keys/host_key.pub.pem

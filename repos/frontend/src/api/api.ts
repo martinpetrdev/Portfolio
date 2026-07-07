@@ -2,7 +2,7 @@ import axios from "axios";
 import type { ISiteHeroConfig, ISiteNavbarConfig } from "../types/api/site.js";
 
 const api = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: process.env.API_URL || "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
   },

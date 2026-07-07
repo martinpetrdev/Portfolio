@@ -25,21 +25,28 @@ jobs:
           registry: ${{ secrets.REGISTRY_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-      - name: Build & Push Docker image
+      - name: Build & Push Frontend Docker image
         uses: docker/build-push-action@v5
         with:
           context: repos/frontend
           push: true
           tags: ${{ secrets.REGISTRY_URL }}/portfolio-frontend:${{ github.sha }}
+      - name: Build & Push Backend Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: repos/backend
+          push: true
+          tags: ${{ secrets.REGISTRY_URL }}/portfolio-backend:${{ github.sha }}
       - name: Update & Commit kustomize
         run: |
           cd kubernetes
 
           kustomize edit set image ${{ secrets.REGISTRY_URL }}/portfolio-frontend=${{ secrets.REGISTRY_URL }}/portfolio-frontend:${{ github.sha }}
+          kustomize edit set image ${{ secrets.REGISTRY_URL }}/portfolio-backend=${{ secrets.REGISTRY_URL }}/portfolio-backend:${{ github.sha }}
 
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          git commit -am "chore: update frontend image to ${{ github.sha }} [skip ci]"
+          git commit -am "chore: update image tags to ${{ github.sha }} [skip ci]"
 
           git push origin main

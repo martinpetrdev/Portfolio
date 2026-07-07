@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portfolio-backend
+  labels:
+    app: portfolio-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portfolio-backend
+  template:
+    metadata:
+      labels:
+        app: portfolio-backend
+    spec:
+      containers:
+        - name: backend
+          image: cr.cloud.martinpetr.dev/portfolio-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3001
+            - name: ssh
+              containerPort: 2222
+          volumeMounts:
+            - name: ssh-keys
+              mountPath: /app/keys
+              readOnly: true
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+      volumes:
+        - name: ssh-keys
+          secret:
+            secretName: portfolio-ssh-keys
+            defaultMode: 0400
