@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Navbar } from "./Navbar";
+import { Footer } from "./Footer";
 
 interface IAppShellProps {
   children: ReactNode | ReactNode[];
@@ -9,7 +10,10 @@ export function AppShell(props: IAppShellProps) {
   return (
     <div className="w-screen min-h-screen bg-ctp-mantle text-ctp-text">
       <Navbar />
-      <main className="w-full h-full flex flex-col">{props.children}</main>
+      <main className="w-full h-full flex flex-col">
+        {props.children}
+        <Footer />
+      </main>
     </div>
   );
 }

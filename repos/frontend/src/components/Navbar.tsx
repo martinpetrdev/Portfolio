@@ -4,7 +4,7 @@ import {
   ISiteNavbarLinkConfig,
 } from "@/types/api/site";
 import { Icon } from "@iconify/react";
-import Link from "next/link";
+import { Link } from "./Link";
 
 interface INavbarLinkProps {
   link: ISiteNavbarLinkConfig;
@@ -18,7 +18,7 @@ export async function Navbar() {
   const config = await API.site.navbar.getConfig();
 
   return (
-    <nav className="w-full h-24 flex flex-row justify-between items-center px-24 fixed top-0 left-0 z-50">
+    <nav className="w-full h-24 flex flex-row justify-between items-center px-24 fixed top-0 left-0 z-50 bg-ctp-mantle/80 backdrop-blur-md border-b border-ctp-surface0">
       <Link
         href={"/"}
         className="text-ctp-peach hover:text-ctp-peach-900 transition-all duration-300"
@@ -26,7 +26,7 @@ export async function Navbar() {
         {config.title}
       </Link>
 
-      <ul className="flex flex-row gap-4 items-center justify-center">
+      <ul className="flex flex-row gap-5 items-center justify-center">
         {config.links.map((link, index) =>
           "icon" in link ? (
             <NavbarIconLink key={index} link={link} />

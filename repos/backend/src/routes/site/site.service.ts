@@ -13,23 +13,23 @@ export class SiteService {
       links: [
         {
           title: 'About me',
-          href: '/about',
+          href: '#about-me',
         },
         {
           title: 'Experience',
-          href: '/experience',
+          href: '#experience',
         },
         {
-          title: 'Projects',
-          href: '/projects',
+          title: 'My work',
+          href: '#my-work',
         },
         {
           title: 'Contact',
-          href: '/contact',
+          href: '#contact',
         },
         {
           icon: 'mdi:github',
-          href: 'https://github.com/MartinGamesCZ',
+          href: 'https://github.com/martinpetrdev',
         },
         {
           icon: 'mdi:linkedin',

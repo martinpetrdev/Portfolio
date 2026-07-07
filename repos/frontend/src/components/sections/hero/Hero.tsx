@@ -1,10 +1,10 @@
 import { API } from "@/api/api";
-import { Button, ButtonVariant } from "../base/Button";
+import { Button, ButtonVariant } from "../../base/Button";
 import { HeroBackground } from "./HeroBackground";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "../../Link";
 import { ImageDithering } from "@paper-design/shaders-react";
-import { HideoutBg } from "../bg/HideoutBg";
+import { HideoutBg } from "../../bg/HideoutBg";
 
 export async function Hero() {
   const config = await API.site.hero.getConfig();
@@ -69,7 +69,8 @@ export async function Hero() {
         colorHighlight="#aaaaaa"
         scale={1}
         speed={10}
-        className="absolute -bottom-20 right-20 z-10 max-w-200 max-h-180 object-contain opacity-100"
+        originalColors
+        className="absolute -bottom-20 right-20 z-10 max-w-200 max-h-180 object-contain opacity-70"
       />
 
       {/* <div className="absolute -bottom-20 right-250 w-50 h-300 bg-linear-to-l from-transparent to-ctp-mantle"></div> */}
