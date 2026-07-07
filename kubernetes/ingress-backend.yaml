@@ -6,7 +6,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`martinpetr.dev`) || Host(`www.martinpetr.dev`)
+    - match: (Host(`martinpetr.dev`) || Host(`www.martinpetr.dev`)) && PathPrefix(`/api`)
       kind: Rule
       services:
         - name: portfolio-backend-svc

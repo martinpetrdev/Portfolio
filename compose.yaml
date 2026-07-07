@@ -5,6 +5,8 @@ services:
     build:
       dockerfile: ./Dockerfile
       context: ./repos/frontend
+    environment:
+      - API_URL=http://backend:3001
     networks:
       traefik_proxy:
       portfolio:
@@ -14,6 +16,25 @@ services:
       - "traefik.http.routers.${APP_ID}.rule=Host(`${APP_DOMAIN}`) || Host(`www.${APP_DOMAIN}`)"
       - "traefik.http.routers.${APP_ID}.entrypoints=https"
       - "traefik.http.services.${APP_ID}.loadbalancer.server.port=3000"
+
+  backend:
+    restart: always
+    build:
+      dockerfile: ./Dockerfile
+      context: ./repos/backend
+    ports:
+      - "2222:2222"
+    volumes:
+      - ./repos/backend/keys:/app/keys:ro
+    networks:
+      traefik_proxy:
+      portfolio:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_proxy"
+      - "traefik.http.routers.${APP_ID}-backend.rule=(Host(`${APP_DOMAIN}`) || Host(`www.${APP_DOMAIN}`)) && PathPrefix(`/site`)"
+      - "traefik.http.routers.${APP_ID}-backend.entrypoints=https"
+      - "traefik.http.services.${APP_ID}-backend.loadbalancer.server.port=3001"
 
 networks:
   traefik_proxy:
