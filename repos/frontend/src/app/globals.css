@@ -5,3 +5,56 @@
   --font-sans: var(--font-fira-code);
   --font-mono: var(--font-fira-code);
 }
+
+:root {
+  --orbit-radius: 120px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --orbit-radius: 130px;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --orbit-radius: 160px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --orbit-radius: 210px;
+  }
+}
+
+@keyframes spin-clockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-counter-clockwise {
+  from {
+    transform: rotate(var(--counter-angle, 0deg));
+  }
+  to {
+    transform: rotate(calc(var(--counter-angle, 0deg) - 360deg));
+  }
+}
+
+.animate-orbit {
+  animation: spin-clockwise 30s linear infinite;
+}
+
+.animate-counter-orbit {
+  animation: spin-counter-clockwise 30s linear infinite;
+}
+
+.orbit-container:hover .animate-orbit,
+.orbit-container:hover .animate-counter-orbit {
+  animation-play-state: paused;
+}

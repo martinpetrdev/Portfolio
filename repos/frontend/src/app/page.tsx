@@ -5,11 +5,14 @@ import { Contact } from "@/components/sections/contact/Contact";
 import { Experience } from "@/components/sections/experience/Experience";
 import { Hero } from "@/components/sections/hero/Hero";
 import { MyWork } from "@/components/sections/my-work/MyWork";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { GitHubCalendar } from "react-github-calendar";
 
-export default function Page() {
-  if (process.env.NODE_ENV == "production") redirect("/coming-soon");
+export default async function Page() {
+  const cookie = (await cookies()).get("bypass-redirect");
+
+  if (process.env.NODE_ENV == "production" && !cookie) redirect("/coming-soon");
 
   return (
     <AppShell>
