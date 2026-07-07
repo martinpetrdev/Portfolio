@@ -11,4 +11,4 @@ resources:
 images:
 - name: cr.cloud.martinpetr.dev/portfolio-frontend
   newName: cr.cloud.martinpetr.dev/portfolio-frontend
-  newTag: ecb9285c9280a693f02b8566fedfdd0f759f7de9
+  newTag: b3c8f8640203093a63f312ced270e07a6adfd36a
